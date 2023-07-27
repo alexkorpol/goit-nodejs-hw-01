@@ -17,9 +17,9 @@ const listContacts = async()=> {
 
 // function getContactById(contactId) {
   // ...твой код. Возвращает объект контакта с таким id. Возвращает null, если объект с таким id не найден.
-    const getContactById = async(id)=> {
+    const getContactById = async(contactId)=> {
     const contacts = await listContacts();
-    const result = contacts.find(item => item.id === id);
+    const result = contacts.find(item => item.id === contactId);
     if(!result){
         return null;
     }
@@ -27,16 +27,36 @@ const listContacts = async()=> {
 }
 
 
-function removeContact(contactId) {
+// function removeContact(contactId) {
   // ...твой код. Возвращает объект удаленного контакта. Возвращает null, если объект с таким id не найден.
+const removeContact = async(contactId)=> {
+    const contacts = await getAll();
+    const idx = contacts.findIndex(item => item.id === contactId);
+    if(idx === -1){
+        return null;
+    }
+    // const [removeProduct] = products.splice(idx, 1);
+    // await updateProducts(products);
+    // return removeProduct
+    const newContacts = contacts.filter((_, index) => index !== idx);
+    await updateContacts(newContacts);
+    return contacts[idx];
 }
+
 
 function addContact(name, email, phone) {
   // ...твой код. Возвращает объект добавленного контакта. 
 }
 
+const updateContacts = async(contacts)=> {
+    await fs.writeFile(contactsPath, JSON.stringify(contacts));
+}
+
 // listContacts();
 // console.log("listContacts()", listContacts())
 
-module.exports = listContacts;
+module.exports = {
+    listContacts,
+    getContactById
+}
     
