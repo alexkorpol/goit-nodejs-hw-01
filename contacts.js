@@ -1,4 +1,5 @@
 const fs = require("fs/promises");
+const { nanoid } = require("nanoid");
 const contactsPath = require("./db/contactsPath");
 
 // function listContacts() {
@@ -30,7 +31,7 @@ const listContacts = async()=> {
 // function removeContact(contactId) {
   // ...твой код. Возвращает объект удаленного контакта. Возвращает null, если объект с таким id не найден.
 const removeContact = async(contactId)=> {
-    const contacts = await getAll();
+    const contacts = await listContacts();
     const idx = contacts.findIndex(item => item.id === contactId);
     if(idx === -1){
         return null;
@@ -44,19 +45,27 @@ const removeContact = async(contactId)=> {
 }
 
 
-function addContact(name, email, phone) {
+// function addContact(name, email, phone) {
   // ...твой код. Возвращает объект добавленного контакта. 
-}
+  const addContact = async (name, email, phone) => {
+    const contacts = await listContacts();
+    const newContact = { name, email, phone, id: nanoid() };
+    contacts.push(newContact);
+    await updateContacts(contacts);
+    return newContact;
+  };
+
 
 const updateContacts = async(contacts)=> {
     await fs.writeFile(contactsPath, JSON.stringify(contacts));
 }
 
-// listContacts();
-// console.log("listContacts()", listContacts())
+
 
 module.exports = {
-    listContacts,
-    getContactById
-}
+  listContacts,
+  getContactById,
+  removeContact,
+  addContact,
+};
     
