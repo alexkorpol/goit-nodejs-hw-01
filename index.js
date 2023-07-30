@@ -40,13 +40,5 @@ const arr = hideBin(process.argv);
 
 const { argv } = yargs(arr);
 
-console.log("file: index.js:42 ~ argv:", argv)
-
 invokeAction(argv);
 
-// invokeAction({ action: "get", id: "05olLMgyVQdWRwgKfg5J666"})
-// invokeAction({ action: 'remove', id: 'mmUhB8UV1wLk9eebjC4hI' });
-
-// invokeAction({ action: 'add', name: "Qwert daf", email: "daf@gmail.com", phone: "(050) 00-00-000" });
-// invokeAction({ action: 'list' });
-// console.log('process.argv', process.argv);
