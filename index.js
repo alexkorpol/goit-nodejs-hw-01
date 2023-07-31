@@ -11,24 +11,17 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
 
     case 'get':
       const contact = await contactsOperations.getContactById(id);
-      if (!contact) {
-        throw new Error(`Сontact with id=${id} not found`);
-      }
-      console.log(contact);
+      console.table(contact);
       break;
 
     case 'add':
-      const newContact = await contactsOperations.addContact(
-        name,
-        email,
-        phone
-      );
-      console.log(newContact);
+      const newContact = await contactsOperations.addContact( name, email, phone );
+      console.table(newContact);
       break;
 
     case 'remove':
-      const removeProduct = await contactsOperations.removeContact(id);
-      console.log(removeProduct);
+      const removeContact = await contactsOperations.removeContact(id);
+      console.table(removeContact);
       break;
 
     default:
